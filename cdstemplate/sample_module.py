@@ -3,10 +3,10 @@ from collections import Counter
 import logging
 import re
 
-
 import pandas as pd
 
-# You should use logging instead of print statements in code others will use.
+# You should use logging instead of print statements in code others will use,
+# so they can customize how much detail to see from your package
 # Refer to https://realpython.com/python-logging/ for detailed examples.
 logger = logging.getLogger(__name__)
 
@@ -19,9 +19,7 @@ def tokenize(text, pattern=r"\s"):
     :param pattern: regex string to split the text on
     :type pattern: str
     """
-    logger.debug(
-        "Tokenizing '%s' with pattern '%s'", text,
-    )
+    logger.debug("Tokenizing '%s' with pattern '%s'", text, pattern)
 
     tokenized = re.split(pattern, text)
     logger.debug("%s token(s) found.", len(tokenized))
