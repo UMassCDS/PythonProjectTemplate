@@ -1,4 +1,6 @@
-"""An example of an module with functions and a class that can be imported once the package is installed."""
+"""An example of an module with functions and a class that can be imported once the package is installed.
+This module provides operations for tokenization and tracking cumulative word counts in a set of docuents.
+"""
 from collections import Counter
 import logging
 import re
@@ -27,7 +29,7 @@ def tokenize(text, pattern=r"\s"):
 
 
 class CorpusCounter:
-    """A simple class that tracks document and token counts in a corpus.
+    """A simple class object that tracks document and token counts in a corpus.
     """
 
     def __init__(self, tokenization_pattern=r"\s", case_insensitive=False):
@@ -40,6 +42,11 @@ class CorpusCounter:
         self.doc_counter = 0
         self.tokenization_pattern = tokenization_pattern
         self.case_insensitive = case_insensitive
+        logger.debug(
+            "CorpusCounter instantiated, tokenization pattern: %s, case insensitive: %s",
+            tokenization_pattern,
+            case_insensitive,
+        )
 
     def add_tokenized_doc(self, token_list):
         """Tallies an already tokenized document in the corpus.
@@ -47,11 +54,20 @@ class CorpusCounter:
         :param token_list: A tokenized document
         :type token_list: list or iterable of strings
         """
+        before_vocab_size = self.get_vocab_size()
         non_empty_tokens = [w for w in token_list if w != ""]
         if self.case_insensitive:
+            logger.info("Adding %s token(s) case insensitively", len(token_list))
             self.token_counter.update([w.lower() for w in non_empty_tokens])
         else:
+            logger.info("Adding %s token(s) case insensitively", len(token_list))
             self.token_counter.update(non_empty_tokens)
+        after_vocab_size = self.get_vocab_size()
+
+        logger.info(
+            "Vocabulary size increased by %s word types",
+            after_vocab_size - before_vocab_size,
+        )
 
         self.doc_counter += 1
 
@@ -72,6 +88,20 @@ class CorpusCounter:
         """
         return self.token_counter[token]
 
+    def get_vocab_size(self):
+        """Returns vocabulary size (number of unique tokens)
+        """
+        return len(self.token_counter)
+
+    def get_token_counts_as_dataframe(self):
+        """Returns the token counts of the corpus as a Pandas DataFrame with columns 'token', 'count'
+        """
+        dataframe = pd.DataFrame.from_records(
+            list(self.token_counter.items()), columns=["token", "count"]
+        )
+        dataframe = dataframe.sort_values("token")
+        return dataframe
+
     def save_token_counts(self, csv_file):
         """Saves the counts of tokens the corpus to a specified
         CSV file in alphabetical order
@@ -80,9 +110,5 @@ class CorpusCounter:
         :type csv_file: str or Path
         """
         logger.info("Saving token counts to %s", csv_file)
-        dataframe = pd.DataFrame.from_records(
-            list(self.token_counter.items()), columns=["token", "count"]
-        )
-        dataframe = dataframe.sort_values("token")
-        dataframe.to_csv(csv_file, index=False, header=True)
+        self.get_token_counts_as_dataframe().to_csv(csv_file, index=False, header=True)
 

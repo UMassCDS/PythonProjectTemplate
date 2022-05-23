@@ -5,8 +5,8 @@ stages:
       --case-insensitive
     deps:
     - path: cdstemplate/corpus_counter_script.py
-      md5: d30c17c62202e560f40fef8c9fefe924
-      size: 1743
+      md5: ac6a52d942221938c5cb256015701a4e
+      size: 2237
     - path: data/gutenberg
       md5: 41d960155f1a7f55480c03cea68ba2a7.dir
       size: 11000

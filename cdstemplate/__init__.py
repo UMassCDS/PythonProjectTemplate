@@ -3,6 +3,6 @@ import sys
 
 if not "-m" in sys.argv:
     from . import corpus_counter_script
-    from . import sample_module
+    from . import word_count
     from . import utils
 

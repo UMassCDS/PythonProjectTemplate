@@ -1,18 +1,28 @@
 """An example of a script you can run. It tokenizes an folder of input documents and
 writes the corpus counts to a user-specified CSV file
 """
+# Import modules, functions and classes from external libraries
 import argparse
 import logging
 from pathlib import Path
 
 # Import the code from this project needed for this script
-from cdstemplate import sample_module, utils
+from cdstemplate import word_count, utils
 
 logger = logging.getLogger(__name__)
 
 
 def main(csv_out, documents, case_insensitive=False):
-    cc = sample_module.CorpusCounter(case_insensitive=case_insensitive)
+    """Determine cumulative word counts for a list of documents and write the results to a CSV file
+
+    :param csv_out: output CSV file path
+    :type csv_out: str or Path
+    :param documents: list of paths to documents to parse word counts from
+    :type documents: list of str
+    :param case_insensitive: Set to True to lowercase all words in cumulative counts, defaults to False
+    :type case_insensitive: bool, optional
+    """
+    cc = word_count.CorpusCounter(case_insensitive=case_insensitive)
     for i, doc in enumerate(documents):
         if i % 2 == 0:
             logger.info("Tokenizing document number %s: %s", i, doc)

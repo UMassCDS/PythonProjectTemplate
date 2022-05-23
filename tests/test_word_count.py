@@ -1,9 +1,9 @@
-"""Tests for the cdstemplate.sample_module methods and classes.
+"""Tests for the cdstemplate.word_count methods and classes.
 
 In pytest, each individual test is a python function that starts with `test`.
 """
 # Import your library for testing
-from cdstemplate import sample_module
+from cdstemplate import word_count
 
 
 def test_tokenize_document():
@@ -35,17 +35,17 @@ def test_tokenize_document():
         "hurry.",
     ]
 
-    assert sample_module.tokenize(my_document) == expected_tokens
+    assert word_count.tokenize(my_document) == expected_tokens
 
 
 def test_tokenize_change_pattern():
     formatted_document = "here's-a-document-with-strange-formatting"
     expected_tokens = ["here's", "a", "document", "with", "strange", "formatting"]
-    assert sample_module.tokenize(formatted_document, pattern="-") == expected_tokens
+    assert word_count.tokenize(formatted_document, pattern="-") == expected_tokens
 
 
 def test_corpus_counter_init():
-    cc = sample_module.CorpusCounter()
+    cc = word_count.CorpusCounter()
     assert cc.doc_counter == 0
     assert cc.get_token_count("word") == 0
     assert cc.case_insensitive == False
@@ -53,7 +53,7 @@ def test_corpus_counter_init():
 
 
 def test_corpus_counter_add_docs():
-    cc = sample_module.CorpusCounter()
+    cc = word_count.CorpusCounter()
     cc.add_doc("a b a word")
     assert cc.doc_counter == 1
     assert cc.get_token_count("a") == 2
@@ -67,14 +67,14 @@ def test_corpus_counter_add_docs():
 
 
 def test_corpus_counter_add_empty_doc():
-    cc = sample_module.CorpusCounter()
+    cc = word_count.CorpusCounter()
     cc.add_doc("")
     assert cc.doc_counter == 1
     assert len(cc.token_counter) == 0
 
 
 def test_corpus_counter_case_insensitive():
-    cc = sample_module.CorpusCounter(case_insensitive=True)
+    cc = word_count.CorpusCounter(case_insensitive=True)
     cc.add_doc("A a B b")
     assert cc.get_token_count("a") == 2
     assert cc.get_token_count("b") == 2
@@ -82,11 +82,20 @@ def test_corpus_counter_case_insensitive():
     assert cc.get_token_count("B") == 0
 
 
+def test_corpus_counter_to_dataframe():
+    cc = word_count.CorpusCounter()
+    cc.add_doc("A a B b")
+    dataframe = cc.get_token_counts_as_dataframe()
+    assert dataframe.shape == (4, 2)
+    assert list(dataframe.columns) == ["token", "count"]
+    assert set(dataframe["token"]) == set(["A", "a", "B", "b"])
+
+
 # The tmp_path fixture allows you save results to a temporary directory
 # that will automatically be cleaned up by the OS later
 def test_corpus_counter_save_csv(tmp_path):
     my_csv = tmp_path / "token_count.csv"
-    cc = sample_module.CorpusCounter()
+    cc = word_count.CorpusCounter()
     cc.add_doc("a b c")
     cc.add_doc("a x y z")
     cc.save_token_counts(my_csv)
