@@ -127,7 +127,7 @@ A script to generate counts of tokens in a corpus
 ...
 ```
 
-Using the help message, we can understand how to run the script to count all the tokens in the text files in `data/gutenberg` in a case-insensitive way, saving token counts to a new csv file, `data/gutenberg_counts.csv`:
+Using the help message, we can understand how to run the script to count all the words in the text files in `data/gutenberg` in a case-insensitive way, saving word counts to a new csv file, `data/gutenberg_counts.csv`:
 ```
 $ python cdstemplate/corpus_counter_script.py data/gutenberg_counts.csv data/gutenberg/*.txt --case-insensitive
 INFO : 2022-05-20 17:45:30,540 : __main__ : Command line arguments: Namespace(csv='data/gutenberg_counts.csv', documents=['data/gutenberg/austen-emma.txt', 'data/gutenberg/austen-persuasion.txt', 'data/gutenberg/austen-sense.txt', 'data/gutenberg/bible-kjv.txt', 'data/gutenberg/blake-poems.txt', 'data/gutenberg/bryant-stories.txt', 'data/gutenberg/burgess-busterbrown.txt', 'data/gutenberg/carroll-alice.txt', 'data/gutenberg/chesterton-ball.txt', 'data/gutenberg/chesterton-brown.txt', 'data/gutenberg/chesterton-thursday.txt'], case_insensitive=True)
@@ -141,10 +141,31 @@ DEBUG : 2022-05-20 17:45:30,540 : cdstemplate.sample_module : Tokenizing '[Emma 
 
 In the Machine Learning Operations (MLOps) community these automation tools are often called [task or workflow orchestration](https://www.datarevenue.com/en-blog/airflow-vs-luigi-vs-argo-vs-mlflow-vs-kubeflow). There are many options, such as [Airflow](https://airflow.apache.org/), [Luigi](https://github.com/spotify/luigi), [MLflow](https://mlflow.org/), [Kubeflow](https://www.kubeflow.org/) and [iterative.ai's DVC and CML](https://iterative.ai/), all with various additional features for versioning experiments, scheduling and visualizations, but at the core they are all built on the same dependency graph principle as the OG [Make](https://opensource.com/article/18/8/what-how-makefile).
 
-In this repository, we have set up a
+Some of these tools can take a lot of work to set up, so discuss the trade-offs with your team to decide what you'd like to use. In the early stages of a project, we recommend using something easy to set up, like [DVC](https://dvc.org/) or [Make](https://opensource.com/article/18/8/what-how-makefile).
+
+### DVC Example
+In this repository, we have set up a pipeline using [DVC](https://dvc.org/), which has the added benefit of versioning data and experiments. DVC is especially easy to set up for Python projects, because it can be installed via pip in the project requirements and integrates with git. See [DVC Get Started documentation](https://dvc.org/doc/start) for instructions on setting up DVC in your own repository.
+
+The stages in our word count experiment pipeline are configured in `dvc.yaml`. As described in the previous section, this takes the `data/gutenberg` files as input and produces `data/gutenberg_counts.csv` as the final product. Since `data/gutenberg_counts.csv` should be generated whenever the data or scripts change, it is managed by DVC and ignored by git. You can re-run the pipeline steps by running `dvc repro`.
+```
+$ dvc repro
+Running stage 'count-words':
+> python cdstemplate/corpus_counter_script.py data/gutenberg_counts.csv data/gutenberg/*.txt --case-insensitive
+INFO : 2022-05-23 11:18:42,813 : __main__ : Command line arguments: Namespace(csv='data/gutenberg_counts.csv', documents=['data/gutenberg/austen-emma.txt', 'data/gutenberg/austen-persuasion.txt', 'data/gutenberg/austen-sense.txt', 'data/gutenberg/bible-kjv.txt', 'data/gutenberg/blake-poems.txt', 'data/gutenberg/bryant-stories.txt', 'data/gutenberg/burgess-busterbrown.txt', 'data/gutenberg/carroll-alice.txt', 'data/gutenberg/chesterton-ball.txt', 'data/gutenberg/chesterton-brown.txt', 'data/gutenberg/chesterton-thursday.txt'], case_insensitive=True)
+...
+$ dvc repro
+Stage 'count-words' didn't change, skipping
+Data and pipelines are up to date.
+```
 
 
-
+You can see the stages in the DAG by running `dvc dag`, in our case it's just a single step called `count-words`:
+```
+$ dvc dag
++-------------+
+| count-words |
++-------------+
+```
 
 ## A Note on Notebooks
 Jupyter notebooks are useful tools for exploratory data analysis, prototyping baseline models and creating visualizations. However, they are _not_ an acceptable way to hand-off code for others to reproduce. Have you ever tried to run someone else's notebook, only to find out a cell was deleted, and you have no idea what it was supposed to do?
