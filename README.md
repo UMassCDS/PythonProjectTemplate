@@ -59,6 +59,9 @@ If you'd like to learn more about python packaging, refer to [the Python Packagi
 ### Requirements via conda environment files
 [Anaconda](https://www.anaconda.com/download/) and its bare bones counterpart, [Miniconda](https://docs.anaconda.com/free/miniconda/index.html), are especially useful if your project depends on libraries that are difficult to install in the standard pythonic way, such as [GPU libraries](https://docs.anaconda.com/free/working-with-conda/packages/gpu-packages/). If this is the case, you should also share a [Conda environment file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually) with your code. The conda virtual environment will need to be created and activated before any `pip install` steps. Installations with conda dependencies are usually a little more complicated, so make sure you include step-by-step instructions in documentation. 
 
+### Containerized applications
+In cases when its important that your software work exactly the same on every operating system or you want to abstract away difficult installation steps for end user, you can consider creating a [Docker container](https://www.docker.com/resources/what-container/). This is often appropriate deploying services in the cloud or providing an application for a tech-savvy person to use on their own. However, it's not necessary for most of our projects. 
+
 
 ## Directory Structure
 So what does each file in this repository do?
@@ -114,7 +117,6 @@ The README, CHANGELOG and docstrings are just as important.
 Read [Real Python's Documenting Python Code: A Complete Guide](https://realpython.com/documenting-python-code/) for more ideas about effectively documenting code. The `.md` files are written using [Markdown](https://www.markdownguide.org/), a handy formatting language that is automatically rendered in Github.
 
 # Tests
-
 Although it's [impossible to generally prove that your code is bug-free](https://en.wikipedia.org/wiki/Undecidable_problem), automated testing is a valuable tool. It provides:
 - Proof that your code works as intended in most common examples and important edge cases
 - Instant feedback on whether changes to the code broke its functionality
