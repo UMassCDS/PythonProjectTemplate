@@ -17,6 +17,7 @@ You should also add project tags for each release in Github, see [Managing relea
 - All build and packaging switched to use only pyproject.toml
 - Minimum python version changed to 3.10
 - Github workflow checks python versions 3.10, 3.11, 3.12
+- Updated DVC version to avoid `ImportError: cannot import name 'fsspec_loop'` in older versions
 ### Removed
 - Removed setup.cfg
 
