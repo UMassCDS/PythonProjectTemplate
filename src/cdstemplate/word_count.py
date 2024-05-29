@@ -1,5 +1,5 @@
 """An example of an module with functions and a class that can be imported once the package is installed.
-This module provides operations for tokenization and tracking cumulative word counts in a set of docuents.
+This module provides operations for tokenization and tracking cumulative word counts in a set of documents.
 """
 from collections import Counter
 import logging
