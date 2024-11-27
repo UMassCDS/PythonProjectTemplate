@@ -1,6 +1,7 @@
 """An example of an module with functions and a class that can be imported once the package is installed.
 This module provides operations for tokenization and tracking cumulative word counts in a set of documents.
 """
+
 from collections import Counter
 import logging
 import re
@@ -29,8 +30,7 @@ def tokenize(text, pattern=r"\s"):
 
 
 class CorpusCounter:
-    """A simple class object that tracks document and token counts in a corpus.
-    """
+    """A simple class object that tracks document and token counts in a corpus."""
 
     def __init__(self, tokenization_pattern=r"\s", case_insensitive=False):
         """Constructor instantiates with empty counters
@@ -89,16 +89,12 @@ class CorpusCounter:
         return self.token_counter[token]
 
     def get_vocab_size(self):
-        """Returns vocabulary size (number of unique tokens)
-        """
+        """Returns vocabulary size (number of unique tokens)"""
         return len(self.token_counter)
 
     def get_token_counts_as_dataframe(self):
-        """Returns the token counts of the corpus as a Pandas DataFrame with columns 'token', 'count'
-        """
-        dataframe = pd.DataFrame.from_records(
-            list(self.token_counter.items()), columns=["token", "count"]
-        )
+        """Returns the token counts of the corpus as a Pandas DataFrame with columns 'token', 'count'"""
+        dataframe = pd.DataFrame.from_records(list(self.token_counter.items()), columns=["token", "count"])
         dataframe = dataframe.sort_values("token")
         return dataframe
 
@@ -111,4 +107,3 @@ class CorpusCounter:
         """
         logger.info("Saving token counts to %s", csv_file)
         self.get_token_counts_as_dataframe().to_csv(csv_file, index=False, header=True)
-

@@ -2,12 +2,15 @@
 
 In pytest, each individual test is a python function that starts with `test`.
 """
+
 # Import your library for testing
 from cdstemplate import word_count
 
 
 def test_tokenize_document():
-    my_document = "It was all very well to say `Drink me,' but the wise little Alice was not going to do that in a hurry."
+    my_document = (
+        "It was all very well to say `Drink me,' but the wise little Alice was not going to do that in a hurry."
+    )
 
     expected_tokens = [
         "It",
