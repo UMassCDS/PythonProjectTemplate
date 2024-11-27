@@ -37,4 +37,4 @@ jobs:
       - name: Ruff Format
         uses: astral-sh/ruff-action@v1
         with:
-          args: "format --diff ./src"
+          args: "format --diff"
