@@ -1,6 +1,7 @@
 """An example of a script you can run. It tokenizes an folder of input documents and
 writes the corpus counts to a user-specified CSV file
 """
+
 # Import modules, functions and classes from external libraries
 import argparse
 import logging
@@ -11,19 +12,16 @@ from cdstemplate import word_count, utils
 
 logger = logging.getLogger(__name__)
 
+
 def main_cli():
-    """A wrapper function that defines command line arguments and help messages for 
-    when the user wants run this module's code as a script. 
+    """A wrapper function that defines command line arguments and help messages for
+    when the user wants run this module's code as a script.
     """
     # The argument parser gives nice ways to include help message and specify which arguments
     # are required or optional, see https://docs.python.org/3/library/argparse.html#prog for usage instructions
-    parser = argparse.ArgumentParser(
-        description="A script to generate counts of tokens in a corpus"
-    )
+    parser = argparse.ArgumentParser(description="A script to generate counts of tokens in a corpus")
 
-    parser.add_argument(
-        "csv", help="Path to the output CSV storing token counts. Required."
-    )
+    parser.add_argument("csv", help="Path to the output CSV storing token counts. Required.")
 
     parser.add_argument(
         "documents",
@@ -64,5 +62,5 @@ def main(csv_out, documents, case_insensitive=False):
 
 # The entry point of your script - if a user runs it from the command line, for example using `python -m <package>.<module>`
 # or `python <script_path>.py`, this is what will be run.
-if __name__ == "__main__":    
+if __name__ == "__main__":
     main_cli()
