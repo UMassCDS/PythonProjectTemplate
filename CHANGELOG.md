@@ -12,7 +12,7 @@ You should also add project tags for each release in Github, see [Managing relea
 
 ### Removed
 - GitHub action to run flake8 for linting in build
-
+- Removed wildcard from corpus-counter script dependency
 
 ## [2.0.0] - 2024-05-29
 ### Added
