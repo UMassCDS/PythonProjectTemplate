@@ -99,7 +99,7 @@ class CorpusCounter:
         return dataframe
 
     def save_token_counts(self, csv_file):
-        """Saves the counts of tokens the corpus to a specified
+        """Saves the counts of tokens from the corpus to a specified
         CSV file in alphabetical order
 
         :param csv_file: Path to desired CSV output file

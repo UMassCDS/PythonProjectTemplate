@@ -24,9 +24,9 @@ def main_cli():
     parser.add_argument("csv", help="Path to the output CSV storing token counts. Required.")
 
     parser.add_argument(
-        "documents",
-        nargs="+",
-        help="Paths to at least one raw text document that make up the corpus. Required.",
+        "document_dir",
+        type=Path,
+        help="Path to folder containing raw .txt documents that make up the corpus. Required.",
     )
     parser.add_argument(
         "--case-insensitive",
@@ -38,19 +38,20 @@ def main_cli():
     args = parser.parse_args()
     utils.configure_logging()
     logger.info("Command line arguments: %s", args)
-    main(args.csv, args.documents, args.case_insensitive)
+    main(args.csv, args.document_dir, args.case_insensitive)
 
 
-def main(csv_out, documents, case_insensitive=False):
+def main(csv_out, document_dir, case_insensitive=False):
     """Determine cumulative word counts for a list of documents and write the results to a CSV file
 
     :param csv_out: output CSV file path
     :type csv_out: str or Path
-    :param documents: list of paths to documents to parse word counts from
-    :type documents: list of str
+    :param document_dir: Path to folder containing .txt files
+    :type document_dir: Path
     :param case_insensitive: Set to True to lowercase all words in cumulative counts, defaults to False
     :type case_insensitive: bool, optional
     """
+    documents = Path(document_dir).glob("*.txt")
     cc = word_count.CorpusCounter(case_insensitive=case_insensitive)
     for i, doc in enumerate(documents):
         if i % 2 == 0:
