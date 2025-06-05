@@ -10,6 +10,13 @@ You should also add project tags for each release in Github, see [Managing relea
 ### Changed
 - GitHub workflow for linting and formatting uses ruff as a separate job
 
+### Fixed
+- Fixed bug where only every other file was read instead of all files
+
+### Added
+- Added note for Z shell users to use quotes when running `pip install -e .'[test,dev]'`
+
+
 ### Removed
 - GitHub action to run flake8 for linting in build
 - Removed wildcard from corpus-counter script dependency
