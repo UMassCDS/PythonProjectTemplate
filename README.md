@@ -15,6 +15,7 @@ Use these steps for setting up a development environment to install and work wit
 3) Install the package.
 	- If you want to just use the scripts and package features, install the project by running `pip install .` from the root directory.
 	- If you will be changing the code and running tests, you can install it by running `pip install -e .[test,dev]`. The `-e/--editable` flag means local changes to the project code will always be available with the package is imported. You wouldn't use this in production, but it's useful for development.
+  - Note for zsh users: use `pip install -e .'[test,dev]'`
 
 
 For example, if you use Conda, you would run the following to create an environment named `template` with python version 3.10, then activate it and install the package in developer mode:
