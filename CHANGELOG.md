@@ -9,7 +9,7 @@ You should also add project tags for each release in Github, see [Managing relea
 ## [Unreleased]
 ### Changed
 - GitHub workflow for linting and formatting uses ruff as a separate job
-
+- Fixed Logging bug in `add_tokenize_docs` in `word_count.py`
 ### Removed
 - GitHub action to run flake8 for linting in build
 - Removed wildcard from corpus-counter script dependency

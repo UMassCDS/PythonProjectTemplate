@@ -60,7 +60,7 @@ class CorpusCounter:
             logger.info("Adding %s token(s) case insensitively", len(token_list))
             self.token_counter.update([w.lower() for w in non_empty_tokens])
         else:
-            logger.info("Adding %s token(s) case insensitively", len(token_list))
+            logger.info("Adding %s token(s) case sensitively", len(token_list))
             self.token_counter.update(non_empty_tokens)
         after_vocab_size = self.get_vocab_size()
 
