@@ -18,12 +18,12 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "testdoc"
-copyright = "2023, Luke Ruud"
+project = "cdstemplate"
+copyright = "2023, UMass Amherst Center for Data Science"
 author = "Luke Ruud"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1"
+release = "2.1.0"
 
 
 # -- General configuration ---------------------------------------------------

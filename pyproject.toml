@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cdstemplate"
-version = "2.0.0"
+version = "2.1.0"
 description = "A template repo for data science and machine learning projects at UMass Center for Data Science."
 readme = "README.md"
 

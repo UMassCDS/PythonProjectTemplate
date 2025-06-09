@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 You should also add project tags for each release in Github, see [Managing releases in a repository](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
 
 ## [Unreleased]
+
+
+## [2.1.0] - 2025-06-09
 ### Changed
 - GitHub workflow for linting and formatting uses ruff as a separate job
 
