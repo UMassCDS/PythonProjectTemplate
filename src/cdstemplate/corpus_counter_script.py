@@ -56,7 +56,7 @@ def main(csv_out, document_dir, case_insensitive=False):
     for i, doc in enumerate(documents):
         if i % 2 == 0:
             logger.info("Tokenizing document number %s: %s", i, doc)
-            cc.add_doc(Path(doc).read_text())
+        cc.add_doc(Path(doc).read_text())
 
     cc.save_token_counts(csv_out)
 
